@@ -5,7 +5,11 @@ include Rack::Test::Methods
 describe Gurk::Router do
 
   before do
-    @router = Gurk::Router.new 
+    @router = Gurk::Router.new
+  end
+
+  def app
+    @router
   end
 
   it 'returns a valid instance' do
@@ -21,11 +25,11 @@ describe Gurk::Router do
     it 'adds a page with a valid content' do
 
       page = Gurk::Page.new("about feature")
-      page.parse!
 
-      page.stub(:path).and_returns('/about')
-      page.stub(:locals).and_returns({title: 'lalala'})
-      page.stub(:render).and_returns('<span>lalala</span>')
+      page.stub(:name).and_return(:about)
+      page.stub(:path).and_return('/about')
+      page.stub(:locals).and_return({title: 'lalala'})
+      page.stub(:render).and_return([200, {}, '<span>lalala</span>'])
 
       @router.add page
 
