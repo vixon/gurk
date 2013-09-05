@@ -23,6 +23,7 @@ You should see a directory with the following structure
     public/
     vendor/
     Gemfile
+    config.ru
 
 ## Features
 
@@ -36,6 +37,12 @@ Create a basic feature file with the following
     And I should see "this and that content"
     
 More information and examples can be found at the Wiki.
+
+## Running
+
+Gurk runs on top of rack. Rack is supported by almost all ruby servers. To run, just type in the following
+
+    rackup 
 
 ## Templates
 
