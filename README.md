@@ -78,7 +78,9 @@ Add a file called app/home.rb
 
 ## Creating your own pages
 
-Ok fine, you don't want to use the features feature. You are free to do so by doing the following
+Ok fine, you don't want to use the features feature. We suggest to using Sinatra instead :).
+
+However, you are free to do so by doing the following
 
 Create a file called app/contact.rb
 
