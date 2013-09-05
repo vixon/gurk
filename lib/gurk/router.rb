@@ -12,7 +12,11 @@ module Gurk
     end
 
     def add(page)
-      routes.push(page)
+      routes
+        .push(page.path)
+        .to { |env| 
+          page.render env
+        }
     end
 
     def routes

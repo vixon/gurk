@@ -1,5 +1,7 @@
 require File.join(File.dirname(__FILE__), '/../', 'spec_helper')
 
+include Rack::Test::Methods
+
 describe Gurk::Router do
 
   before do
@@ -17,6 +19,22 @@ describe Gurk::Router do
   context "Adding Pages" do
 
     it 'adds a page with a valid content' do
+
+      page = Gurk::Page.new("about feature")
+      page.parse!
+
+      page.stub(:path).and_returns('/about')
+      page.stub(:locals).and_returns({title: 'lalala'})
+      page.stub(:render).and_returns('<span>lalala</span>')
+
+      @router.add page
+
+      request "/about"
+
+      expect(last_response.body).to include 'lalala'      
+    end
+
+    it 'adds pages from the pages collection' do
       pending
     end
 
