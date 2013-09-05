@@ -12,8 +12,7 @@ module Gurk
     end
 
     def add(page)
-      routes
-        .push(page.path)
+      http_router.add(page.path)
         .to { |env| 
           page.render env
         }
@@ -21,6 +20,10 @@ module Gurk
 
     def routes
       @routes ||= []
+    end
+
+    def call(env)
+      http_router.call(env)
     end
 
   end
