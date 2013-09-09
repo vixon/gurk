@@ -1,5 +1,7 @@
 require "gurk/version"
 
 module Gurk
-  # Your code goes here...
+  def self.root_path
+    File.expand_path '../..', __FILE__
+  end
 end
