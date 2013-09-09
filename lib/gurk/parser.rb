@@ -6,9 +6,9 @@ require 'multi_json'
 module Gurk
   class Parser
     VALID_STEPS = [
-      { "^I have a page called '(.+)'$" => -> (k, _) { { name: k } } },
-      { "^it has a route of '(.+)'$" => -> (k, _) { { route: k } } },
-      { "^it has a (.+) called '(.+)'$" => -> (k, v) { { k.to_sym => v } } }
+      { "^I have a page called '(.+)'$" => lambda { |k, _| { name: k } } },
+      { "^it has a route of '(.+)'$" => lambda { |k, _| { route: k } } },
+      { "^it has a (.+) called '(.+)'$" => lambda { |k, v| { k.to_sym => v } } }
     ]
 
     def initialize
