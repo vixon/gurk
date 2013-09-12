@@ -3,8 +3,10 @@ require 'spec_helper'
 describe Gurk::Parser do
 
   let(:parsed_data) do
-    [ [{:name=>"About"}, {:route=>"/about"}, {:locals=>[{:title=>"about"}]}],
-      [{:name=>"Home"}, {:route=>"/"}, {:locals=>[{:title=>"home"}]}] ]
+    [ 
+      { :name => "About", :route => "/about", :locals => [ { :title=>"about" } ] },
+      { :name => "Home", :route => "/", :locals => [ { :title => "home" } ] } 
+    ]
   end
 
   let(:steps) do
