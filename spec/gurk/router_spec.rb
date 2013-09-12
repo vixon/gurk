@@ -38,6 +38,22 @@ describe Gurk::Router do
       expect(last_response.body).to include 'lalala'      
     end
 
+    it 'adds a page with a valid content with params' do
+
+      page = Gurk::Page.new("feature page with parameter")
+
+      page.stub(:name).and_return(:about)
+      page.stub(:path).and_return('/pages/:slug')
+      page.stub(:locals).and_return({title: 'lalala'})
+      page.stub(:render).and_return([200, {}, '<span>lalala</span><span>this-is-a-slug</span>'])
+
+      @router.add page
+
+      request '/pages/this-is-a-slug'
+
+      expect(last_response.body).to include 'this-is-a-slug'
+    end
+
     it 'adds pages from the pages collection' do
       pending
     end

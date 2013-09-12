@@ -11,13 +11,12 @@ module Gurk
       { "^it has a (.+) called '(.+)'$" => lambda { |k, v| { k.to_sym => v } } }
     ]
 
-    def initialize
+    def initialize(sources = Dir.glob("#{Gurk.root}/**/*.feature"))
       @parsed_names = []
       @parsed_data = []
       io = StringIO.new
       formatter = Gherkin::Formatter::JSONFormatter.new(io)
       parser = Gherkin::Parser::Parser.new(formatter)
-      sources = Dir.glob "#{Gurk.root_path}/**/*.feature"
       read_feature_files(io, parser, formatter, sources)
     end
 
