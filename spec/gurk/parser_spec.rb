@@ -3,9 +3,9 @@ require 'spec_helper'
 describe Gurk::Parser do
 
   let(:parsed_data) do
-    [ 
+    [
       { :name => "About", :route => "/about", :locals => [ { :title=>"about" } ] },
-      { :name => "Home", :route => "/", :locals => [ { :title => "home" } ] } 
+      { :name => "Home", :route => "/", :locals => [ { :title => "home" } ] }
     ]
   end
 
@@ -154,22 +154,26 @@ describe Gurk::Parser do
     end
 
     describe '#parse_locals' do
+      let(:step) { [[{:name=>"About"}, {:title=>"about"}, {:route=>"/about"}]] }
+
       it 'passes each given step to #sanitize' do
-        step = [[{:name=>"About"}, {:title=>"about"}, {:route=>"/about"}]]
         parser.stub(:extract_locals_from)
         parser.should_receive(:sanitize)
         parser.send :parse_locals, step
       end
 
       it 'passes sanitized steps to #extract_locals_from' do
-        step = [[{:name=>"About"}, {:title=>"about"}, {:route=>"/about"}]]
         parser.should_receive(:extract_locals_from)
         parser.send :parse_locals, step
       end
 
+      it 'passes extracted locals to #merge_steps' do
+        parser.should_receive(:merge_steps)
+        parser.send :parse_locals, step
+      end
+
       it 'returns the result of the parsing' do
-        step = [[{:name=>"About"}, {:title=>"about"}, {:route=>"/about"}]]
-        result = [[{:name=>"About"}, {:route=>"/about"}, {:locals=>[{:title=>"about"}]}]]
+        result = [{:name=>"About", :route=>"/about", :locals=>[{:title=>"about"}]}]
         parser.instance_variable_set(:@parsed_data, step)
         expect(parser.send :parse_locals, step).to eq result
       end
@@ -187,6 +191,14 @@ describe Gurk::Parser do
         step = [[{:name=>"About"}, {:title=>"about"}, {:route=>"/about"}]]
         local = [{:title=>"about"}]
         expect(parser.send :extract_locals_from, step, local).to eq local
+      end
+    end
+
+    describe '#merge_steps' do
+      it 'returns ' do
+        step = [{:name=>"About"}, {:route=>"/about"}, {:locals=>[{:title=>"about"}]}]
+        result = { :name => "About", :route => "/about", :locals => [ { :title=>"about" } ] }
+        expect(parser.send :merge_steps, step).to eq result
       end
     end
   end

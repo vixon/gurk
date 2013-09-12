@@ -54,11 +54,13 @@ module Gurk
     end
 
     def parse_locals(steps)
-      steps.each do |step|
-        locals = sanitize(step)
-        step << { locals: extract_locals_from(step, locals) }
+      @parsed_data = [].tap do |data|
+        steps.map do |step|
+          locals = sanitize(step)
+          step << { locals: extract_locals_from(step, locals) }
+          data << merge_steps(step)
+        end
       end
-      @parsed_data
     end
 
     def sanitize(step)
@@ -68,6 +70,10 @@ module Gurk
     def extract_locals_from(step, locals)
       step.reject! { |h| h == locals.first }
       locals
+    end
+
+    def merge_steps(step)
+      {}.tap { |data| step.each { |h| data.merge! h } }
     end
   end
 end
