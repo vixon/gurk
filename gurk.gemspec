@@ -26,4 +26,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency "gherkin"
   spec.add_dependency 'http_router', '~> 0.11.0'
   spec.add_dependency 'tilt'
+  spec.add_dependency 'thor'
 end

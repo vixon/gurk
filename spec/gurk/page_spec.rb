@@ -33,15 +33,15 @@ describe Gurk::Page do
     it 'render the page' do
       page = Gurk::Page.new({name: 'about', path: '/pages/slug', locals: {title: 'lalala'}})
       result = page.render nil
-      expect(result.last).to include 'lalala'
+      expect(result.last.first).to include 'lalala'
     end
 
     it 'renders the page with the layout' do
       page = Gurk::Page.new({name: 'about', path: '/pages/slug', locals: {title: 'lalala', layout: 'layout.erb'}})
       result = page.render nil
 
-      expect(result.last).to include 'This is the layout'
-      expect(result.last).to include 'lalala'
+      expect(result.last.first).to include 'This is the layout'
+      expect(result.last.first).to include 'lalala'
     end
 
     it 'raises an exception if the template is invalid' do

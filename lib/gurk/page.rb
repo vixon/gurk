@@ -23,7 +23,7 @@ module Gurk
         output = render_template(env)
       end
 
-      [200, {content_type: 'text/html'}, output]
+      [200, {'content_type' => 'text/html'}, [output]]
 
     rescue Errno::ENOENT => e
       raise Gurk::TemplateNotFound.new(e)  
