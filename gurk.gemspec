@@ -6,11 +6,11 @@ require 'gurk/version'
 Gem::Specification.new do |spec|
   spec.name          = "gurk"
   spec.version       = Gurk::VERSION
-  spec.authors       = ["Jason Torres"]
-  spec.email         = ["jason.e.torres@gmail.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
-  spec.homepage      = ""
+  spec.authors       = ["Vixon"]
+  spec.email         = [""]
+  spec.description   = %q{Gurk}
+  spec.summary       = %q{A plain english ruby microframework that }
+  spec.homepage      = "http://github.com/vixon/gurk"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
@@ -22,8 +22,8 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake"
   spec.add_development_dependency "rspec"
   spec.add_development_dependency "rack-test"
-  spec.add_development_dependency "gherkin"
 
+  spec.add_dependency "gherkin"
   spec.add_dependency 'http_router', '~> 0.11.0'
   spec.add_dependency 'tilt'
 end

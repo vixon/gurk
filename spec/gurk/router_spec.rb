@@ -20,52 +20,37 @@ describe Gurk::Router do
     expect(@router.http_router).to be_instance_of HttpRouter
   end
 
-  context "Adding Pages" do
+  it 'adds a page with a valid content' do
+    page = Gurk::Page.new({name: 'about', path: '/about', locals: {title: 'lalala'}})
 
-    it 'adds a page with a valid content' do
+    @router.add page
 
-      page = Gurk::Page.new("about feature")
+    request "/about"
 
-      page.stub(:name).and_return(:about)
-      page.stub(:path).and_return('/about')
-      page.stub(:locals).and_return({title: 'lalala'})
-      page.stub(:render).and_return([200, {}, '<span>lalala</span>'])
+    expect(last_response.status).to eq(200)
+  end
 
-      @router.add page
+  it 'adds a page with a valid content with params' do
 
-      request "/about"
+    page = Gurk::Page.new({name: 'about', path: '/pages/slug', locals: {title: 'lalala'}})
 
-      expect(last_response.body).to include 'lalala'      
-    end
+    @router.add page
 
-    it 'adds a page with a valid content with params' do
+    request '/pages/this-is-a-slug'
 
-      page = Gurk::Page.new("feature page with parameter")
+    expect(last_response.status).to eq(200)
+  end
 
-      page.stub(:name).and_return(:about)
-      page.stub(:path).and_return('/pages/:slug')
-      page.stub(:locals).and_return({title: 'lalala'})
-      page.stub(:render).and_return([200, {}, '<span>lalala</span><span>this-is-a-slug</span>'])
+  it 'adds pages from the pages collection' do
+    pending
+  end
 
-      @router.add page
+  it 'adds a page with a redirect' do
+    pending
+  end
 
-      request '/pages/this-is-a-slug'
-
-      expect(last_response.body).to include 'this-is-a-slug'
-    end
-
-    it 'adds pages from the pages collection' do
-      pending
-    end
-
-    it 'adds a page with a redirect' do
-      pending
-    end
-
-    it 'adds a static route' do
-      pending
-    end
-
+  it 'adds a static route' do
+    pending
   end
 
 end

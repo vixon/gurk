@@ -1,8 +1,8 @@
 # Gurk
 
-A ruby microframework for the masses. You don't need a programming background all you need to know is the English language. 
+A ruby microframework for the masses. You don't need a programming background all you need is the english language. 
 
-Perfect for designers, people who doesn't want to get their hands dirty coding.
+Perfect for designers or any developers that don't want to write code at all.
 
 ## Installation
 
@@ -23,7 +23,6 @@ You should see a directory with the following structure
     public/
     vendor/
     Gemfile
-    config.ru
 
 ## Features
 
@@ -32,19 +31,11 @@ Create a basic feature file with the following
     Given I have a home page
     And with the path "/"
     And with the title "Home Page"
-    When I visit "/"
-    Then I should see the home page
-    And I should see "this and that content"
-    
+    And with the layout "
+
 More information and examples can be found at the Wiki.
 
-## Running
-
-Gurk runs on top of rack. Rack is supported by almost all ruby servers. To run, just type in the following
-
-    rackup 
-
-## Templates
+## Template Support
 
 Gurk supports Tilt. A template wrapper that gives you the flexibility to choose which
 
@@ -53,7 +44,6 @@ If you're using haml, just add the following in your Gemfile
     gem 'haml'
 
 Don't forget to run bundle install
-
 
 ## Overiding generated pages
 
@@ -67,31 +57,30 @@ For each page generated from the feature scenarios. We create an object that you
 
 Add a file called app/home.rb
 
-    class HomePage
-      include Gurk::Methods
+   class HomePage
+     include Gurk::Methods
 
-      local :page_title, 'This is the new title' 
-      local :header, 'The most awesome site ever'
+     local :page_title, 'This is the new title' 
+     local :header, 'The most awesome site ever'
 
-      path '/homepage'
-    end
+     path '/homepage'
+
+   end
 
 ## Creating your own pages
 
-Ok fine, you don't want to use the features feature. We suggest to using Sinatra instead :).
-
-However, you are free to do so by doing the following
+Ok fine, you don't want to use the features feature. You are free to do so by doing the following
 
 Create a file called app/contact.rb
 
-    class ContactPage
-      include Gurk::Methods
+   class ContactPage
+     include Gurk::Methods
 
-      name 'contact'
-      local :title, "Contact Page"
-      path '/contact'
+     name 'contact'
+     local :title, "Contact Page"
+     path '/contact'
 
-    end
+   end
 
 Don't forget to create your view. For example: app/views/contact.html.erb 
 
@@ -119,3 +108,5 @@ Vixon
 ## License
 
 MIT License
+
+

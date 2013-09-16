@@ -2,10 +2,15 @@ require 'spec_helper'
 
 describe Gurk::Parser do
 
+  let(:sources) do
+    #Dir.glob("#{Dir.pwd}/spec/support/*.feature")
+    [ "#{Dir.pwd}/spec/support/another_example.feature", "#{Dir.pwd}/spec/support/example.feature" ]
+  end
+
   let(:parsed_data) do
     [
-      { :name => "About", :route => "/about", :locals => [ { :title=>"about" } ] },
-      { :name => "Home", :route => "/", :locals => [ { :title => "home" } ] }
+      { :name => "About", :route => "/about", :locals => { :title=>"about" } },
+      { :name => "Home", :route => "/", :locals => { :title => "home" } }
     ]
   end
 
@@ -51,7 +56,7 @@ describe Gurk::Parser do
   describe '#initialize' do
     it 'reads existing feature files' do
       Gurk::Parser.any_instance.should_receive(:read_feature_files)
-      Gurk::Parser.new
+      Gurk::Parser.new(sources)
     end
   end
 
@@ -62,11 +67,11 @@ describe Gurk::Parser do
         .should_receive(:parse_names)
         .exactly(parsed_names.length)
         .times
-      Gurk::Parser.new.parse!
+      Gurk::Parser.new(sources).parse!
     end
 
     it 'passes the parsed data to #parse_locals' do
-      parser = Gurk::Parser.new
+      parser = Gurk::Parser.new(sources)
       Gurk::Parser
         .any_instance
         .should_receive(:parse_locals)
@@ -75,12 +80,12 @@ describe Gurk::Parser do
     end
 
     it 'returns a hash with the correct format' do
-      expect(Gurk::Parser.new.parse!).to eq parsed_data
+      expect(Gurk::Parser.new(sources).parse!).to eq parsed_data
     end
   end
 
   describe 'private methods' do
-    let(:parser) { Gurk::Parser.new }
+    let(:parser) { Gurk::Parser.new(sources) }
 
     describe '#read_feature_files' do
       it 'parses the feature files' do
@@ -89,12 +94,12 @@ describe Gurk::Parser do
           .should_receive(:parse)
           .exactly(parsed_names.length)
           .times
-        Gurk::Parser.new
+        Gurk::Parser.new(sources)
       end
 
       it 'passes the result to #process_data' do
         Gurk::Parser.any_instance.should_receive(:process_data)
-        Gurk::Parser.new
+        Gurk::Parser.new(sources)
       end
     end
 
@@ -104,7 +109,7 @@ describe Gurk::Parser do
           .any_instance
           .should_receive(:extract_steps_from)
           .twice # Two 'element' nodes
-        Gurk::Parser.new
+        Gurk::Parser.new(sources)
       end
     end
 
@@ -114,7 +119,7 @@ describe Gurk::Parser do
           .any_instance
           .should_receive(:extract_names_from)
           .twice # Two 'steps' nodes
-        Gurk::Parser.new
+        Gurk::Parser.new(sources)
       end
 
       it 'saves the return value of #extract_names_from' do
@@ -135,7 +140,7 @@ describe Gurk::Parser do
           .should_receive(:parse_names)
           .exactly(parsed_names.length)
           .times
-        Gurk::Parser.new.parse!
+        Gurk::Parser.new(sources).parse!
       end
     end
 
@@ -173,7 +178,7 @@ describe Gurk::Parser do
       end
 
       it 'returns the result of the parsing' do
-        result = [{:name=>"About", :route=>"/about", :locals=>[{:title=>"about"}]}]
+        result = [{:name=>"About", :route=>"/about", :locals => {:title=>"about"}}]
         parser.instance_variable_set(:@parsed_data, step)
         expect(parser.send :parse_locals, step).to eq result
       end
@@ -187,15 +192,15 @@ describe Gurk::Parser do
     end
 
     describe '#extract_locals_from' do
-      it 'returns ' do
+      it 'returns parsed locals' do
         step = [[{:name=>"About"}, {:title=>"about"}, {:route=>"/about"}]]
         local = [{:title=>"about"}]
-        expect(parser.send :extract_locals_from, step, local).to eq local
+        expect(parser.send :extract_locals_from, step, local).to eq local.first
       end
     end
 
     describe '#merge_steps' do
-      it 'returns ' do
+      it 'returns merged steps' do
         step = [{:name=>"About"}, {:route=>"/about"}, {:locals=>[{:title=>"about"}]}]
         result = { :name => "About", :route => "/about", :locals => [ { :title=>"about" } ] }
         expect(parser.send :merge_steps, step).to eq result

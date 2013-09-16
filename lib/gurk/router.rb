@@ -13,15 +13,9 @@ module Gurk
 
     def add(page)
       routes.push(page)
-      process_params(page)
-
-      http_router.add(page.path).to { |env| 
-          page.render env
+      http_router.add(page.route).to { |env| 
+        page.render env
       }
-    end
-
-    def process_params(url)
-      http_router.url(url)
     end
 
     def routes

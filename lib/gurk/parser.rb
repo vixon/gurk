@@ -11,9 +11,12 @@ module Gurk
       { "^it has a (.+) called '(.+)'$" => lambda { |k, v| { k.to_sym => v } } }
     ]
 
-    def initialize(sources = Dir.glob("#{Gurk.root}/**/*.feature"))
+    attr_accessor :sources
+
+    def initialize(sources = Dir.glob("#{Dir.pwd}/features/*.feature"))
       @parsed_names = []
       @parsed_data = []
+      @sources = sources
       io = StringIO.new
       formatter = Gherkin::Formatter::JSONFormatter.new(io)
       parser = Gherkin::Parser::Parser.new(formatter)
@@ -69,7 +72,7 @@ module Gurk
 
     def extract_locals_from(step, locals)
       step.reject! { |h| h == locals.first }
-      locals
+      locals.first
     end
 
     def merge_steps(step)
