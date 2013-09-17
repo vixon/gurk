@@ -18,3 +18,4 @@ tmp
 .rvmrc
 .ruby-version
 spec/support/testapp
+**.DS_Store

@@ -7,9 +7,9 @@ Gem::Specification.new do |spec|
   spec.name          = "gurk"
   spec.version       = Gurk::VERSION
   spec.authors       = ["Vixon"]
-  spec.email         = [""]
+  spec.email         = ["vixonshow@gmail.com"]
   spec.description   = %q{Gurk}
-  spec.summary       = %q{A plain english ruby microframework that }
+  spec.summary       = %q{A plain english ruby microframework that makes sense}
   spec.homepage      = "http://github.com/vixon/gurk"
   spec.license       = "MIT"
 
