@@ -26,11 +26,7 @@ describe Gurk::Cli do
       expect(File.exists?(File.join(sample_directory, 'config.ru'))).to be_true
       expect(File.exists?(File.join(sample_directory, 'app.rb'))).to be_true
     end
-
-    it 'shows setup instructions' do
-      pending
-    end
-
+ 
   end
 
 end

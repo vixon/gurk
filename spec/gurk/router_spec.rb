@@ -40,17 +40,5 @@ describe Gurk::Router do
 
     expect(last_response.status).to eq(200)
   end
-
-  it 'adds pages from the pages collection' do
-    pending
-  end
-
-  it 'adds a page with a redirect' do
-    pending
-  end
-
-  it 'adds a static route' do
-    pending
-  end
-
+ 
 end
