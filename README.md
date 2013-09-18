@@ -17,9 +17,10 @@ You should see a directory with the following structure
 
     app/
       assets/
-      views/
-      views/layouts/application.html.erb
+      views/home.html.erb
+      views/layout.html.erb
     features/
+    features/home.erb
     public/
     vendor/
     Gemfile
@@ -28,10 +29,21 @@ You should see a directory with the following structure
 
 Create a basic feature file with the following
 
-    Given I have a home page
-    And with the path "/"
-    And with the title "Home Page"
-    And with the layout "
+  Feature: My site
+
+    Scenario: Home Page
+      Given I have a page called 'Home'
+      And it has a title called 'home'
+      And it has a route of '/'
+      When I visit '/'
+      Then I should see 'home'
+
+    Scenario: About
+      Given I have a page called 'About'
+      And it has a title called 'About Us'
+      And it has a route of '/about'
+      When I visit '/about'
+      Then I should see 'About Us'
 
 More information and examples can be found at the Wiki.
 
@@ -44,49 +56,6 @@ If you're using haml, just add the following in your Gemfile
     gem 'haml'
 
 Don't forget to run bundle install
-
-## Overiding generated pages
-
-For each page generated from the feature scenarios. We create an object that you can easily override. For this feature.
-
-
-    Given I have a home page
-    And with the path "/"
-    And with the title "Home Page"
-    And with the layout "
-
-Add a file called app/home.rb
-
-   class HomePage
-     include Gurk::Methods
-
-     local :page_title, 'This is the new title' 
-     local :header, 'The most awesome site ever'
-
-     path '/homepage'
-
-   end
-
-## Creating your own pages
-
-Ok fine, you don't want to use the features feature. You are free to do so by doing the following
-
-Create a file called app/contact.rb
-
-   class ContactPage
-     include Gurk::Methods
-
-     name 'contact'
-     local :title, "Contact Page"
-     path '/contact'
-
-   end
-
-Don't forget to create your view. For example: app/views/contact.html.erb 
-
-Then register it to Gurk in your app.rb file.
-
-    Gurk::Router.register ContactPage
 
 ## Tests
 
@@ -103,10 +72,8 @@ Gurk supports tests! In fact we do sanity check per each request during developm
 
 ## Contributors
 
-Vixon
+Vixon - The Jason Torres and Victor Solis show.
 
 ## License
 
 MIT License
-
-
